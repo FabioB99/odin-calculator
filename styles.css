@@ -2,3 +2,72 @@
     box-sizing: border-box;
 }
 
+body {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+main {
+    background-color: rosybrown;
+}
+
+header {
+    background-color: antiquewhite;
+}
+
+
+.calculator {
+    width: 600px;
+    display: flex;
+    flex-direction: column;
+    padding: 16px;
+}
+
+.buttons {
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+}
+
+.numbers {
+    flex: 0 0 calc(75% - 8px);
+    display: flex;
+    flex-flow: row wrap;
+    align-content: flex-start;
+    gap: 16px;
+}
+
+.numbers button {
+    width: calc((100% - 32px) / 3);
+}
+
+.operators {
+    flex: 0 0 calc(25% - 8px);
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.operators button {
+    flex: 1;
+    width: 100%;
+}
+
+.equal {
+    margin-top: 16px;
+    width: 100%;
+}
+
+.display {
+    background: grey;
+    color: white;
+    margin: 8px 0px 16px 0px;
+    height: 100px;
+}
+
+button {
+    height: 100px;
+    margin: 0;
+}
