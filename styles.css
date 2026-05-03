@@ -1,5 +1,8 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
 * {
     box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
 }
 
 body {
@@ -9,20 +12,14 @@ body {
     align-items: center;
 }
 
-main {
-    background-color: rosybrown;
-}
 
-header {
-    background-color: antiquewhite;
-}
-
+/** ---- Calculator Layout ---- **/
 
 .calculator {
     width: 600px;
     display: flex;
     flex-direction: column;
-    padding: 16px;
+    padding: 32px;
 }
 
 .buttons {
@@ -57,11 +54,33 @@ header {
 
 .equal {
     margin-top: 16px;
-    width: 100%;
+    width: 100%; 
 }
 
 .display {
-    background: grey;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+
+/** ---- Calculator Styling ---- **/
+
+.calculator {
+    background-color: lightgray;
+}
+
+.operator {
+    background-color: rgb(255, 196, 68);
+}
+
+.clear {
+    background-color: lightcoral;
+}
+
+.display {
+    background: rgb(39, 39, 39);
     color: white;
     margin: 8px 0px 16px 0px;
     height: 100px;
@@ -70,4 +89,5 @@ header {
 button {
     height: 100px;
     margin: 0;
+    border: none;
 }
