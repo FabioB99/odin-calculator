@@ -21,30 +21,26 @@ function divide(number1, number2) {
 function operate(operator, number1, number2) {
     switch (operator) {
         case "+":
-            return (add(number1, number2));
+            return (add(Number(number1), Number(number2)));
         case "-":
-            return (substract(number1, number2));
+            return (substract(Number(number1), Number(number2)));
         case "*":
-            return (multiply(number1, number2));
-        case ":":
-            return (divide(number1, number2));
+            return (multiply(Number(number1), Number(number2)));
+        case "/":
+            return (divide(Number(number1), Number(number2)));
     }
 }
 
 function updateFirstNumber(text) {
     firstNumber = firstNumber + text;
-    console.log(firstNumber);
 }
 
 function updateSecondNumber(text) {
     secondNumber = secondNumber + text;
-    console.log(secondNumber);
 }
-
 
 function updateOperator(text) {
     operator = text;
-    console.log(operator);
 }
 
 function updateDisplay(text) {
@@ -52,7 +48,7 @@ function updateDisplay(text) {
     display.textContent = display.textContent + text;
 }
 
-function clearDisplay() {
+function clear() {
     const display = document.querySelector(".display");
     display.textContent = "";
 }
@@ -61,14 +57,14 @@ function clearDisplay() {
 
 let firstNumber = "";
 let secondNumber = "";
-let operator;
+let operator = "";
 
 
 const digitBtns = document.querySelectorAll(".digit");
 digitBtns.forEach((button) => {
     button.addEventListener("click", (e) => {
 
-        if (operator == undefined) {
+        if (operator == "") {
             updateFirstNumber(e.target.id);
             updateDisplay(e.target.id);
         } else {
@@ -79,21 +75,20 @@ digitBtns.forEach((button) => {
     });
 })
 
-
 const operatorBtns = document.querySelectorAll(".operator");
 operatorBtns.forEach((button) => {
     button.addEventListener("click", (e) => {
         updateOperator(e.target.id);
-        updateDisplay(e.target.id);
+        updateDisplay(` ${e.target.textContent} `);
     });
 })
 
+const clearBtn = document.querySelector(".clear");
+clearBtn.addEventListener("click", clear);
+
 const equalBtn = document.querySelector(".equal");
 equalBtn.addEventListener("click", () => {
-    console.log(operate(operator, firstNumber, secondNumber));
-
-
+    clear();
+    updateDisplay(operate(operator,firstNumber,secondNumber))
 })
 
-const clearBtn = document.querySelector(".clear");
-clearBtn.addEventListener("click", clearDisplay);
