@@ -1,5 +1,3 @@
-console.log("Hello World");
-
 // --- Math operations ---
 
 function add(number1, number2) {
@@ -20,21 +18,67 @@ function divide(number1, number2) {
 
 // --- Calculator functions ---
 
-let firstNumber;
-let seecondNumber;
-let operator;
-
 function operate(operator, number1, number2) {
     switch (operator) {
-        case "+" : 
+        case "+":
             return (add(number1, number2));
-        case "-" : 
+        case "-":
             return (substract(number1, number2));
-        case "*" : 
+        case "*":
             return (multiply(number1, number2));
-        case ":" : 
+        case ":":
             return (divide(number1, number2));
     }
 }
 
-console.log(operate("*",6,3));
+function updateFirstNumber(text) {
+    firstNumber = firstNumber + text;
+    console.log(firstNumber);
+}
+
+function updateSecondNumber(text) {
+    secondNumber = secondNumber + text;
+    console.log(secondNumber);
+}
+
+
+function updateOperator(text) {
+    operator = text;
+    console.log(operator);
+}
+
+function updateDisplay(text) {
+    const display = document.querySelector(".display");
+    display.textContent = display.textContent + text;
+}
+
+// --- Calculator Event Listeners ---
+
+let firstNumber = "";
+let secondNumber = "";
+let operator;
+
+
+const digitBtns = document.querySelectorAll(".digit");
+digitBtns.forEach((button) => {
+    button.addEventListener("click", (e) => {
+
+        if (operator == undefined) {
+            updateFirstNumber(e.target.id);
+            updateDisplay(e.target.id);
+        } else {
+            updateSecondNumber(e.target.id);
+            updateDisplay(e.target.id);
+        }
+
+    });
+})
+
+
+const operatorBtns = document.querySelectorAll(".operator");
+operatorBtns.forEach((button) => {
+    button.addEventListener("click", (e) => {
+        updateOperator(e.target.id);
+        updateDisplay(e.target.id);
+    });
+})
