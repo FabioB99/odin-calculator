@@ -52,6 +52,11 @@ function updateDisplay(text) {
     display.textContent = display.textContent + text;
 }
 
+function clearDisplay() {
+    const display = document.querySelector(".display");
+    display.textContent = "";
+}
+
 // --- Calculator Event Listeners ---
 
 let firstNumber = "";
@@ -82,3 +87,13 @@ operatorBtns.forEach((button) => {
         updateDisplay(e.target.id);
     });
 })
+
+const equalBtn = document.querySelector(".equal");
+equalBtn.addEventListener("click", () => {
+    console.log(operate(operator, firstNumber, secondNumber));
+
+
+})
+
+const clearBtn = document.querySelector(".clear");
+clearBtn.addEventListener("click", clearDisplay);
