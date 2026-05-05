@@ -49,7 +49,7 @@ function updateDisplay(text) {
 }
 
 function clear() {
-    const display = document.querySelector(".display");      
+    const display = document.querySelector(".display");
     display.textContent = "";
 
     firstNumber = "";
@@ -58,8 +58,8 @@ function clear() {
 }
 
 function resetDisplay() {
-    const display = document.querySelector(".display");      
-    display.textContent = "";    
+    const display = document.querySelector(".display");
+    display.textContent = "";
 }
 
 // --- Calculator Event Listeners ---
@@ -97,7 +97,10 @@ clearBtn.addEventListener("click", clear);
 
 const equalBtn = document.querySelector(".equal");
 equalBtn.addEventListener("click", () => {
-    resetDisplay();
-    updateDisplay(operate(operator,firstNumber,secondNumber))
+    if (firstNumber == "" | secondNumber == "" | operator == "") {} else {
+        resetDisplay();
+        updateDisplay(operate(operator, firstNumber, secondNumber))
+    }
+
 })
 
