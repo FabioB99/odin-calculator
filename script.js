@@ -49,8 +49,17 @@ function updateDisplay(text) {
 }
 
 function clear() {
-    const display = document.querySelector(".display");
+    const display = document.querySelector(".display");      
     display.textContent = "";
+
+    firstNumber = "";
+    secondNumber = "";
+    operator = "";
+}
+
+function resetDisplay() {
+    const display = document.querySelector(".display");      
+    display.textContent = "";    
 }
 
 // --- Calculator Event Listeners ---
@@ -88,7 +97,7 @@ clearBtn.addEventListener("click", clear);
 
 const equalBtn = document.querySelector(".equal");
 equalBtn.addEventListener("click", () => {
-    clear();
+    resetDisplay();
     updateDisplay(operate(operator,firstNumber,secondNumber))
 })
 
