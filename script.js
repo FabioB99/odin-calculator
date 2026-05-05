@@ -49,9 +49,7 @@ function updateDisplay(text) {
 }
 
 function clear() {
-    const display = document.querySelector(".display");
-    display.textContent = "";
-
+    resetDisplay();
     firstNumber = "";
     secondNumber = "";
     operator = "";
@@ -61,6 +59,7 @@ function resetDisplay() {
     const display = document.querySelector(".display");
     display.textContent = "";
 }
+
 
 // --- Calculator Event Listeners ---
 
@@ -72,7 +71,6 @@ let operator = "";
 const digitBtns = document.querySelectorAll(".digit");
 digitBtns.forEach((button) => {
     button.addEventListener("click", (e) => {
-
         if (operator == "") {
             updateFirstNumber(e.target.id);
             updateDisplay(e.target.id);
@@ -87,6 +85,24 @@ digitBtns.forEach((button) => {
 const operatorBtns = document.querySelectorAll(".operator");
 operatorBtns.forEach((button) => {
     button.addEventListener("click", (e) => {
+
+        if (firstNumber != "" && secondNumber != "") {
+            resetDisplay();
+            firstNumber = operate(operator, firstNumber, secondNumber);
+            secondNumber = "";
+
+            console.log(firstNumber);
+            console.log(secondNumber);
+            console.log(operator);
+
+            updateDisplay(firstNumber);
+
+            console.log(firstNumber);
+            console.log(secondNumber);
+            console.log(operator);
+
+        }
+
         updateOperator(e.target.id);
         updateDisplay(` ${e.target.textContent} `);
     });
