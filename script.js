@@ -86,6 +86,8 @@ digitBtns.forEach((button) => {
             console.log(firstNumber);
             console.log(secondNumber);
             console.log(operator);
+
+
         }
 
     });
@@ -126,8 +128,14 @@ const equalBtn = document.querySelector(".equal");
 equalBtn.addEventListener("click", () => {
     if (firstNumber == "" | secondNumber == "" | operator == "") { } else {
         resetDisplay();
-        updateDisplay(operate(operator, firstNumber, secondNumber))
-    }
+        let result = operate(operator, firstNumber, secondNumber);
 
+        if (result == Infinity) {
+            const display = document.querySelector(".display");
+            display.textContent = `Illegal move detected 👀`
+        } else {
+            updateDisplay(result);
+        }
+    }
 })
 
