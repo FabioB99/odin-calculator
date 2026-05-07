@@ -45,7 +45,10 @@ function updateOperator(text) {
 
 function updateDisplay(text) {
     const display = document.querySelector(".display");
-    display.textContent = text;
+
+    let num = Number(text);
+    display.textContent = num % 1 !== 0 ? Number(num.toFixed(2)) : num;
+
 }
 
 function clear() {
