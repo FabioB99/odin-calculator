@@ -45,7 +45,7 @@ function updateOperator(text) {
 
 function updateDisplay(text) {
     const display = document.querySelector(".display");
-    display.textContent = display.textContent + text;
+    display.textContent = text;
 }
 
 function clear() {
@@ -72,11 +72,17 @@ const digitBtns = document.querySelectorAll(".digit");
 digitBtns.forEach((button) => {
     button.addEventListener("click", (e) => {
         if (operator == "") {
+            updateDisplay(`${firstNumber + e.target.id}`);
             updateFirstNumber(e.target.id);
-            updateDisplay(e.target.id);
+            console.log(firstNumber);
+            console.log(secondNumber);
+            console.log(operator);
         } else {
+            updateDisplay(`${secondNumber + e.target.id}`);
             updateSecondNumber(e.target.id);
-            updateDisplay(e.target.id);
+            console.log(firstNumber);
+            console.log(secondNumber);
+            console.log(operator);
         }
 
     });
@@ -104,7 +110,9 @@ operatorBtns.forEach((button) => {
         }
 
         updateOperator(e.target.id);
-        updateDisplay(` ${e.target.textContent} `);
+        console.log(firstNumber);
+        console.log(secondNumber);
+        console.log(operator);
     });
 })
 
@@ -113,7 +121,7 @@ clearBtn.addEventListener("click", clear);
 
 const equalBtn = document.querySelector(".equal");
 equalBtn.addEventListener("click", () => {
-    if (firstNumber == "" | secondNumber == "" | operator == "") {} else {
+    if (firstNumber == "" | secondNumber == "" | operator == "") { } else {
         resetDisplay();
         updateDisplay(operate(operator, firstNumber, secondNumber))
     }
