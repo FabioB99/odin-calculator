@@ -53,14 +53,19 @@ function updateDisplay(text) {
 
 function clear() {
     resetDisplay();
-    firstNumber = "";
-    secondNumber = "";
-    operator = "";
+    resetNumbersAndOperators();  
 }
 
 function resetDisplay() {
     const display = document.querySelector(".display");
     display.textContent = "";
+}
+
+function resetNumbersAndOperators() {
+    firstNumber = "";
+    secondNumber = "";
+    operator = "";
+    result = "";
 }
 
 
@@ -69,25 +74,22 @@ function resetDisplay() {
 let firstNumber = "";
 let secondNumber = "";
 let operator = "";
+let result = "";
 
 
 const digitBtns = document.querySelectorAll(".digit");
 digitBtns.forEach((button) => {
     button.addEventListener("click", (e) => {
+        if (result !== "") {
+            resetNumbersAndOperators();
+        }
+
         if (operator == "") {
             updateDisplay(`${firstNumber + e.target.id}`);
             updateFirstNumber(e.target.id);
-            console.log(firstNumber);
-            console.log(secondNumber);
-            console.log(operator);
         } else {
             updateDisplay(`${secondNumber + e.target.id}`);
             updateSecondNumber(e.target.id);
-            console.log(firstNumber);
-            console.log(secondNumber);
-            console.log(operator);
-
-
         }
 
     });
@@ -96,28 +98,13 @@ digitBtns.forEach((button) => {
 const operatorBtns = document.querySelectorAll(".operator");
 operatorBtns.forEach((button) => {
     button.addEventListener("click", (e) => {
-
         if (firstNumber != "" && secondNumber != "") {
             resetDisplay();
             firstNumber = operate(operator, firstNumber, secondNumber);
             secondNumber = "";
-
-            console.log(firstNumber);
-            console.log(secondNumber);
-            console.log(operator);
-
             updateDisplay(firstNumber);
-
-            console.log(firstNumber);
-            console.log(secondNumber);
-            console.log(operator);
-
         }
-
         updateOperator(e.target.id);
-        console.log(firstNumber);
-        console.log(secondNumber);
-        console.log(operator);
     });
 })
 
@@ -128,7 +115,7 @@ const equalBtn = document.querySelector(".equal");
 equalBtn.addEventListener("click", () => {
     if (firstNumber == "" | secondNumber == "" | operator == "") { } else {
         resetDisplay();
-        let result = operate(operator, firstNumber, secondNumber);
+        result = operate(operator, firstNumber, secondNumber);
 
         if (result == Infinity) {
             const display = document.querySelector(".display");
