@@ -16,18 +16,22 @@ function divide(number1, number2) {
     return number1 / number2;
 }
 
+function roundResult(number) {
+    return number % 1 !== 0 ? Number(number.toFixed(2)) : number;
+}
+
 // --- Calculator functions ---
 
 function operate(operator, number1, number2) {
     switch (operator) {
         case "+":
-            return (add(Number(number1), Number(number2)));
+            return roundResult(add(Number(number1), Number(number2)));
         case "-":
-            return (substract(Number(number1), Number(number2)));
+            return roundResult(substract(Number(number1), Number(number2)));
         case "*":
-            return (multiply(Number(number1), Number(number2)));
+            return roundResult(multiply(Number(number1), Number(number2)));
         case "/":
-            return (divide(Number(number1), Number(number2)));
+            return roundResult(divide(Number(number1), Number(number2)));
     }
 }
 
@@ -45,9 +49,9 @@ function updateOperator(text) {
 
 function updateDisplay(text) {
     const display = document.querySelector(".display");
-
-    let num = Number(text);
-    display.textContent = num % 1 !== 0 ? Number(num.toFixed(2)) : num;
+    display.textContent = text;
+    //let num = Number(text);
+    //display.textContent = num % 1 !== 0 ? Number(num.toFixed(2)) : num;
 
 }
 
