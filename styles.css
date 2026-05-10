@@ -53,8 +53,14 @@ body {
 }
 
 .equal {
+    flex: 0 0 calc(75% - 8px);
     margin-top: 16px;
     width: 100%; 
+}
+
+.clear {
+    margin-top: 16px;
+    flex: 0 0 calc((75% - 8px - 32px) / 3);
 }
 
 .display {
@@ -67,6 +73,11 @@ body {
     height: 100px;
 }
 
+.equal-container {
+    display: flex;
+    gap: 16px;
+    justify-content: space-between;
+}
 
 /** ---- Calculator Styling ---- **/
 
@@ -74,7 +85,7 @@ body {
     background-color: rgb(236, 236, 236);
 }
 
-.number,.dot {
+.number,.dot, .undo {
     background-color: rgb(192, 192, 192);
 }
 
