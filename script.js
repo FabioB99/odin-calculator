@@ -50,14 +50,12 @@ function updateOperator(text) {
 function updateDisplay(text) {
     const display = document.querySelector(".display");
     display.textContent = text;
-    //let num = Number(text);
-    //display.textContent = num % 1 !== 0 ? Number(num.toFixed(2)) : num;
-
 }
 
 function clear() {
     resetDisplay();
-    resetNumbersAndOperators();  
+    resetNumbersAndOperators();
+    manageDotButton();
 }
 
 function resetDisplay() {
@@ -72,6 +70,17 @@ function resetNumbersAndOperators() {
     result = "";
 }
 
+function manageDotButton() {
+    const dotBtn = document.querySelector(".dot");
+
+    let currentNumber = operator === "" ? firstNumber : secondNumber;
+
+    if (currentNumber.includes(".")) {
+        dotBtn.disabled = true;
+    } else {
+        dotBtn.disabled = false;
+    }
+}
 
 // --- Calculator Event Listeners ---
 
@@ -79,14 +88,13 @@ let firstNumber = "";
 let secondNumber = "";
 let operator = "";
 let result = "";
+let dotBtnDeactivated = false;
 
 
 const digitBtns = document.querySelectorAll(".digit");
 digitBtns.forEach((button) => {
     button.addEventListener("click", (e) => {
-        if (result !== "") {
-            resetNumbersAndOperators();
-        }
+        if (result !== "") { resetNumbersAndOperators(); }
 
         if (operator == "") {
             updateDisplay(`${firstNumber + e.target.id}`);
@@ -95,9 +103,10 @@ digitBtns.forEach((button) => {
             updateDisplay(`${secondNumber + e.target.id}`);
             updateSecondNumber(e.target.id);
         }
-
+        manageDotButton();
     });
 })
+
 
 const operatorBtns = document.querySelectorAll(".operator");
 operatorBtns.forEach((button) => {
@@ -109,6 +118,7 @@ operatorBtns.forEach((button) => {
             updateDisplay(firstNumber);
         }
         updateOperator(e.target.id);
+        manageDotButton();
     });
 })
 

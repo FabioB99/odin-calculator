@@ -75,7 +75,7 @@ body {
 }
 
 .number,.dot {
-    background-color: lightgray;
+    background-color: rgb(192, 192, 192);
 }
 
 .operator, .equal {
@@ -97,4 +97,9 @@ button {
     margin: 0;
     border: none;
     font-size: 145%;
+}
+
+button:disabled {
+    background-color: rgb(213, 213, 213);
+    cursor: not-allowed;
 }
