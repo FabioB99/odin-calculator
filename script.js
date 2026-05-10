@@ -60,6 +60,9 @@ function handleOperators(input) {
 }
 
 function evaluate() {
+    let element = document.querySelector(".equal");
+    addClickFeedback(element);
+
     if (firstNumber == "" || secondNumber == "" || operator == "") { } else {
         resetDisplay();
         result = operate(operator, firstNumber, secondNumber);
@@ -74,12 +77,18 @@ function evaluate() {
 }
 
 function clear() {
+    let element = document.querySelector(".clear");
+    addClickFeedback(element);
+
     resetDisplay();
     resetNumbersAndOperators();
     manageDotButton();
 }
 
 function undo() {
+    let element = document.querySelector(".undo");
+    addClickFeedback(element);
+
     if (operator === "") {
         firstNumber = firstNumber.slice(0, -1);
         updateDisplay(firstNumber);
@@ -133,6 +142,13 @@ function updateOperator(text) {
     operator = text;
 }
 
+function addClickFeedback(e) {
+    e.classList.add("clicked");
+    setTimeout(() => {
+        e.classList.remove("clicked");
+    }, 80);
+}
+
 // --- Calculator Event Listeners ---
 
 let firstNumber = "";
@@ -144,6 +160,7 @@ let result = "";
 const digitBtns = document.querySelectorAll(".digit");
 digitBtns.forEach((button) => {
     button.addEventListener("click", (e) => {
+        addClickFeedback(e.target);
         handleNumbers(e.target.id);
     });
 })
@@ -151,6 +168,7 @@ digitBtns.forEach((button) => {
 const operatorBtns = document.querySelectorAll(".operator");
 operatorBtns.forEach((button) => {
     button.addEventListener("click", (e) => {
+        addClickFeedback(e.target);
         handleOperators(e.target.id);
     });
 })
@@ -229,6 +247,5 @@ document.addEventListener("keydown", (e) => {
             clear();
             break;
     }
-    console.log(e.code);
-});15
+});
 

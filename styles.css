@@ -114,3 +114,7 @@ button:disabled {
     background-color: rgb(213, 213, 213);
     cursor: not-allowed;
 }
+
+.clicked {
+    outline: 1.5px solid darkgrey;
+}
