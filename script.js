@@ -109,7 +109,8 @@ function manageDotButton() {
 
     let currentNumber = operator === "" ? firstNumber : secondNumber;
 
-    if (currentNumber.includes(".")) {
+    // Disable if: number already has a dot OR no number entered yet
+    if (currentNumber.includes(".") || currentNumber === "") {
         dotBtn.disabled = true;
     } else {
         dotBtn.disabled = false;
@@ -155,7 +156,7 @@ let firstNumber = "";
 let secondNumber = "";
 let operator = "";
 let result = "";
-
+manageDotButton();
 
 const digitBtns = document.querySelectorAll(".digit");
 digitBtns.forEach((button) => {
