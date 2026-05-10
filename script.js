@@ -4,7 +4,7 @@ function add(number1, number2) {
     return number1 + number2;
 }
 
-function substract(number1, number2) {
+function subtract(number1, number2) {
     return number1 - number2;
 }
 
@@ -27,7 +27,7 @@ function operate(operator, number1, number2) {
         case "+":
             return roundResult(add(Number(number1), Number(number2)));
         case "-":
-            return roundResult(substract(Number(number1), Number(number2)));
+            return roundResult(subtract(Number(number1), Number(number2)));
         case "*":
             return roundResult(multiply(Number(number1), Number(number2)));
         case "/":
@@ -88,8 +88,6 @@ let firstNumber = "";
 let secondNumber = "";
 let operator = "";
 let result = "";
-let dotBtnDeactivated = false;
-
 
 const digitBtns = document.querySelectorAll(".digit");
 digitBtns.forEach((button) => {
@@ -127,7 +125,7 @@ clearBtn.addEventListener("click", clear);
 
 const equalBtn = document.querySelector(".equal");
 equalBtn.addEventListener("click", () => {
-    if (firstNumber == "" | secondNumber == "" | operator == "") { } else {
+    if (firstNumber == "" || secondNumber == "" || operator == "") { } else {
         resetDisplay();
         result = operate(operator, firstNumber, secondNumber);
 
