@@ -35,18 +35,6 @@ function operate(operator, number1, number2) {
     }
 }
 
-function updateFirstNumber(text) {
-    firstNumber = firstNumber + text;
-}
-
-function updateSecondNumber(text) {
-    secondNumber = secondNumber + text;
-}
-
-function updateOperator(text) {
-    operator = text;
-}
-
 function updateDisplay(text) {
     const display = document.querySelector(".display");
     display.textContent = text;
@@ -56,29 +44,6 @@ function clear() {
     resetDisplay();
     resetNumbersAndOperators();
     manageDotButton();
-}
-
-function undo() {
-    if (operator === "") {
-        firstNumber = firstNumber.slice(0, -1);
-        updateDisplay(firstNumber);
-    } else {
-        secondNumber = secondNumber.slice(0, -1);
-        updateDisplay(secondNumber);
-    }
-
-}
-
-function resetDisplay() {
-    const display = document.querySelector(".display");
-    display.textContent = "";
-}
-
-function resetNumbersAndOperators() {
-    firstNumber = "";
-    secondNumber = "";
-    operator = "";
-    result = "";
 }
 
 function manageDotButton() {
@@ -93,6 +58,43 @@ function manageDotButton() {
     }
 }
 
+function undo() {
+    if (operator === "") {
+        firstNumber = firstNumber.slice(0, -1);
+        updateDisplay(firstNumber);
+    } else {
+        secondNumber = secondNumber.slice(0, -1);
+        updateDisplay(secondNumber);
+    }
+
+}
+
+// --- Supporting functions ---
+
+function resetDisplay() {
+    const display = document.querySelector(".display");
+    display.textContent = "";
+}
+
+function resetNumbersAndOperators() {
+    firstNumber = "";
+    secondNumber = "";
+    operator = "";
+    result = "";
+}
+
+function updateFirstNumber(text) {
+    firstNumber = firstNumber + text;
+}
+
+function updateSecondNumber(text) {
+    secondNumber = secondNumber + text;
+}
+
+function updateOperator(text) {
+    operator = text;
+}
+
 // --- Calculator Event Listeners ---
 
 let firstNumber = "";
@@ -100,34 +102,38 @@ let secondNumber = "";
 let operator = "";
 let result = "";
 
+function handleNumbers(e) {
+    if (result !== "") { resetNumbersAndOperators(); }
+
+    if (operator == "") {
+        updateDisplay(`${firstNumber + e.target.id}`);
+        updateFirstNumber(e.target.id);
+    } else {
+        updateDisplay(`${secondNumber + e.target.id}`);
+        updateSecondNumber(e.target.id);
+    }
+    manageDotButton();
+}
+
+function handleOperators(e) {
+    if (firstNumber != "" && secondNumber != "") {
+        resetDisplay();
+        firstNumber = operate(operator, firstNumber, secondNumber);
+        secondNumber = "";
+        updateDisplay(firstNumber);
+    }
+    updateOperator(e.target.id);
+    manageDotButton();
+}
+
 const digitBtns = document.querySelectorAll(".digit");
 digitBtns.forEach((button) => {
-    button.addEventListener("click", (e) => {
-        if (result !== "") { resetNumbersAndOperators(); }
-
-        if (operator == "") {
-            updateDisplay(`${firstNumber + e.target.id}`);
-            updateFirstNumber(e.target.id);
-        } else {
-            updateDisplay(`${secondNumber + e.target.id}`);
-            updateSecondNumber(e.target.id);
-        }
-        manageDotButton();
-    });
+    button.addEventListener("click", handleNumbers);
 })
 
 const operatorBtns = document.querySelectorAll(".operator");
 operatorBtns.forEach((button) => {
-    button.addEventListener("click", (e) => {
-        if (firstNumber != "" && secondNumber != "") {
-            resetDisplay();
-            firstNumber = operate(operator, firstNumber, secondNumber);
-            secondNumber = "";
-            updateDisplay(firstNumber);
-        }
-        updateOperator(e.target.id);
-        manageDotButton();
-    });
+    button.addEventListener("click", handleOperators);
 })
 
 const clearBtn = document.querySelector(".clear");
@@ -150,4 +156,9 @@ equalBtn.addEventListener("click", () => {
         }
     }
 })
+
+
+document.addEventListener("keydown", (e) => {
+    console.log(e.key);
+});
 
