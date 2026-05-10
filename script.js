@@ -147,7 +147,13 @@ function addClickFeedback(e) {
     e.classList.add("clicked");
     setTimeout(() => {
         e.classList.remove("clicked");
-    }, 80);
+    }, 150);
+}
+
+function handleKeyWithFeedback(buttonId, handlerFunction, input) {
+    let button = document.getElementById(buttonId);
+    if (button) addClickFeedback(button);
+    handlerFunction(input);
 }
 
 // --- Calculator Event Listeners ---
@@ -188,54 +194,54 @@ equalBtn.addEventListener("click", evaluate)
 document.addEventListener("keydown", (e) => {
     switch (e.code) {
         case "Digit1":
-            handleNumbers("1");
+            handleKeyWithFeedback("1", handleNumbers, "1");
             break;
         case "Digit2":
-            handleNumbers("2");
+            handleKeyWithFeedback("2", handleNumbers, "2");
             break;
         case "Digit3":
-            handleNumbers("3");
+            handleKeyWithFeedback("3", handleNumbers, "3");
             break;
         case "Digit4":
-            handleNumbers("4");
+            handleKeyWithFeedback("4", handleNumbers, "4");
             break;
         case "Digit5":
-            handleNumbers("5");
+            handleKeyWithFeedback("5", handleNumbers, "5");
             break;
         case "Digit6":
-            handleNumbers("6");
+            handleKeyWithFeedback("6", handleNumbers, "6");
             break;
         case "Digit7":
             if (e.shiftKey) {
-                handleOperators("/");    // Shift + 7
+                handleKeyWithFeedback("/", handleOperators, "/");
             } else {
-                handleNumbers("7");      // Just 7
+                handleKeyWithFeedback("7", handleNumbers, "7");
             }
             break;
         case "Digit8":
-            handleNumbers("8");
+            handleKeyWithFeedback("8", handleNumbers, "8");
             break;
         case "Digit9":
-            handleNumbers("9");
+            handleKeyWithFeedback("9", handleNumbers, "9");
             break;
         case "Digit0":
-            handleNumbers("0");
+            handleKeyWithFeedback("0", handleNumbers, "0");
             break;
         case "BracketRight":
             if (e.shiftKey) {
-                handleOperators("*");   // Shift + "+"
+                handleKeyWithFeedback("*", handleOperators, "*");
             } else {
-                handleOperators("+");   // Just +
+                handleKeyWithFeedback("+", handleOperators, "+");
             }
             break;
-        case "Slash":                   // Minus Key
-            handleOperators("-");
+        case "Slash":
+            handleKeyWithFeedback("-", handleOperators, "-");
             break;
-        case "Period":                  // Minus Key
+        case "Period":
             if (e.shiftKey) {
-                handleOperators("/");   // Shift + Period
+                handleKeyWithFeedback("/", handleOperators, "/");
             } else {
-                handleNumbers(".");     // Just Period
+                handleKeyWithFeedback(".", handleNumbers, ".");
             }
             break;   
         case "Backspace":
