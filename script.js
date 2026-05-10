@@ -58,6 +58,17 @@ function clear() {
     manageDotButton();
 }
 
+function undo() {
+    if (operator === "") {
+        firstNumber = firstNumber.slice(0, -1);
+        updateDisplay(firstNumber);
+    } else {
+        secondNumber = secondNumber.slice(0, -1);
+        updateDisplay(secondNumber);
+    }
+
+}
+
 function resetDisplay() {
     const display = document.querySelector(".display");
     display.textContent = "";
@@ -105,7 +116,6 @@ digitBtns.forEach((button) => {
     });
 })
 
-
 const operatorBtns = document.querySelectorAll(".operator");
 operatorBtns.forEach((button) => {
     button.addEventListener("click", (e) => {
@@ -122,6 +132,9 @@ operatorBtns.forEach((button) => {
 
 const clearBtn = document.querySelector(".clear");
 clearBtn.addEventListener("click", clear);
+
+const undoBtn = document.querySelector(".undo");
+undoBtn.addEventListener("click", undo);
 
 const equalBtn = document.querySelector(".equal");
 equalBtn.addEventListener("click", () => {
