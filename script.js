@@ -35,15 +35,64 @@ function operate(operator, number1, number2) {
     }
 }
 
-function updateDisplay(text) {
-    const display = document.querySelector(".display");
-    display.textContent = text;
+function handleNumbers(input) {
+    if (result !== "") { resetNumbersAndOperators(); }
+
+    if (operator == "") {
+        updateDisplay(`${firstNumber + input}`);
+        updateFirstNumber(input);
+    } else {
+        updateDisplay(`${secondNumber + input}`);
+        updateSecondNumber(input);
+    }
+    manageDotButton();
+}
+
+function handleOperators(input) {
+    if (firstNumber != "" && secondNumber != "") {
+        resetDisplay();
+        firstNumber = operate(operator, firstNumber, secondNumber);
+        secondNumber = "";
+        updateDisplay(firstNumber);
+    }
+    updateOperator(input);
+    manageDotButton();
+}
+
+function evaluate() {
+    if (firstNumber == "" || secondNumber == "" || operator == "") { } else {
+        resetDisplay();
+        result = operate(operator, firstNumber, secondNumber);
+
+        if (result == Infinity) {
+            const display = document.querySelector(".display");
+            display.textContent = `Illegal move detected 👀`
+        } else {
+            updateDisplay(result);
+        }
+    }
 }
 
 function clear() {
     resetDisplay();
     resetNumbersAndOperators();
     manageDotButton();
+}
+
+function undo() {
+    if (operator === "") {
+        firstNumber = firstNumber.slice(0, -1);
+        updateDisplay(firstNumber);
+    } else {
+        secondNumber = secondNumber.slice(0, -1);
+        updateDisplay(secondNumber);
+    }
+
+}
+
+function updateDisplay(text) {
+    const display = document.querySelector(".display");
+    display.textContent = text;
 }
 
 function manageDotButton() {
@@ -56,17 +105,6 @@ function manageDotButton() {
     } else {
         dotBtn.disabled = false;
     }
-}
-
-function undo() {
-    if (operator === "") {
-        firstNumber = firstNumber.slice(0, -1);
-        updateDisplay(firstNumber);
-    } else {
-        secondNumber = secondNumber.slice(0, -1);
-        updateDisplay(secondNumber);
-    }
-
 }
 
 // --- Supporting functions ---
@@ -102,38 +140,19 @@ let secondNumber = "";
 let operator = "";
 let result = "";
 
-function handleNumbers(e) {
-    if (result !== "") { resetNumbersAndOperators(); }
-
-    if (operator == "") {
-        updateDisplay(`${firstNumber + e.target.id}`);
-        updateFirstNumber(e.target.id);
-    } else {
-        updateDisplay(`${secondNumber + e.target.id}`);
-        updateSecondNumber(e.target.id);
-    }
-    manageDotButton();
-}
-
-function handleOperators(e) {
-    if (firstNumber != "" && secondNumber != "") {
-        resetDisplay();
-        firstNumber = operate(operator, firstNumber, secondNumber);
-        secondNumber = "";
-        updateDisplay(firstNumber);
-    }
-    updateOperator(e.target.id);
-    manageDotButton();
-}
 
 const digitBtns = document.querySelectorAll(".digit");
 digitBtns.forEach((button) => {
-    button.addEventListener("click", handleNumbers);
+    button.addEventListener("click", (e) => {
+        handleNumbers(e.target.id);
+    });
 })
 
 const operatorBtns = document.querySelectorAll(".operator");
 operatorBtns.forEach((button) => {
-    button.addEventListener("click", handleOperators);
+    button.addEventListener("click", (e) => {
+        handleOperators(e.target.id);
+    });
 })
 
 const clearBtn = document.querySelector(".clear");
@@ -143,22 +162,73 @@ const undoBtn = document.querySelector(".undo");
 undoBtn.addEventListener("click", undo);
 
 const equalBtn = document.querySelector(".equal");
-equalBtn.addEventListener("click", () => {
-    if (firstNumber == "" || secondNumber == "" || operator == "") { } else {
-        resetDisplay();
-        result = operate(operator, firstNumber, secondNumber);
+equalBtn.addEventListener("click", evaluate)
 
-        if (result == Infinity) {
-            const display = document.querySelector(".display");
-            display.textContent = `Illegal move detected 👀`
-        } else {
-            updateDisplay(result);
-        }
-    }
-})
-
+// --- Keyboard Support ---
 
 document.addEventListener("keydown", (e) => {
-    console.log(e.key);
-});
+    switch (e.code) {
+        case "Digit1":
+            handleNumbers("1");
+            break;
+        case "Digit2":
+            handleNumbers("2");
+            break;
+        case "Digit3":
+            handleNumbers("3");
+            break;
+        case "Digit4":
+            handleNumbers("4");
+            break;
+        case "Digit5":
+            handleNumbers("5");
+            break;
+        case "Digit6":
+            handleNumbers("6");
+            break;
+        case "Digit7":
+            if (e.shiftKey) {
+                handleOperators("/");    // Shift + 7
+            } else {
+                handleNumbers("7");      // Just 7
+            }
+            break;
+        case "Digit8":
+            handleNumbers("8");
+            break;
+        case "Digit9":
+            handleNumbers("9");
+            break;
+        case "Digit0":
+            handleNumbers("0");
+            break;
+        case "BracketRight":
+            if (e.shiftKey) {
+                handleOperators("*");   // Shift + "+"
+            } else {
+                handleOperators("+");   // Just +
+            }
+            break;
+        case "Slash":                   // Minus Key
+            handleOperators("-");
+            break;
+        case "Period":                  // Minus Key
+            if (e.shiftKey) {
+                handleOperators("/");   // Shift + Period
+            } else {
+                handleNumbers(".");     // Just Period
+            }
+            break;   
+        case "Backspace":
+            undo();
+            break;
+        case "Enter":
+            evaluate();
+            break;
+        case "Escape":
+            clear();
+            break;
+    }
+    console.log(e.code);
+});15
 

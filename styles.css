@@ -85,7 +85,7 @@ body {
     background-color: rgb(236, 236, 236);
 }
 
-.number,.dot, .undo {
+.digit,.dot, .undo {
     background-color: rgb(192, 192, 192);
 }
 
